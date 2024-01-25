@@ -1,4 +1,4 @@
-package com.example.openit
+package com.example.openit.extensions
 
 import java.text.ParseException
 import java.text.SimpleDateFormat

@@ -5,19 +5,43 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="mydata" type="com.example.openit.home.LinkData"/>
+        <variable name="mydata" type="com.example.openit.activities.home.model.LinkData"/>
     </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/progress_circular"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintHeight_percent="1"
+        android:background="@color/grid_grey"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".home.HomeActivity"
+        tools:context=".activities.home.HomeActivity"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/back_blue">
+
+
+
 
             <TextView
                 android:id="@+id/textView4"
@@ -47,8 +71,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
-                android:paddingHorizontal="16dp"
                 android:background="@drawable/top_round_grey"
+                android:paddingHorizontal="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView4">
 
@@ -77,8 +101,8 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/round_all_side"
-                    android:paddingTop="12dp"
                     android:paddingHorizontal="12dp"
+                    android:paddingTop="12dp"
                     android:paddingBottom="20dp"
                     app:layout_constraintDimensionRatio="1.5:1"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -108,10 +132,10 @@
                         android:id="@+id/graph_time_range"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/grey_border_all_round_nopad"
                         android:text="DD MMM - D MMM"
                         android:textColor="@color/text_grey"
                         android:textSize="16dp"
-                        android:background="@drawable/grey_border_all_round_nopad"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView" />
 
@@ -154,7 +178,7 @@
                 </HorizontalScrollView>
 
 
-                <com.example.openit.CustomButton
+                <com.example.openit.ui.CustomButton
                     android:id="@+id/button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -172,9 +196,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+                    android:backgroundTint="@color/text_blue"
                     android:text="Top Links"
                     android:textStyle="bold"
-                    android:backgroundTint="@color/text_blue"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/button" />
 
@@ -183,26 +207,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:text="Recent Links"
-                    android:textStyle="bold"
                     android:backgroundTint="@color/transparent"
+                    android:text="Recent Links"
                     android:textColor="@color/text_grey"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/top_link_button"
                     app:layout_constraintStart_toEndOf="@+id/top_link_button"
-                    app:layout_constraintTop_toTopOf="@+id/top_link_button"
-                  />
+                    app:layout_constraintTop_toTopOf="@+id/top_link_button" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_item"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:orientation="vertical"
                     android:layout_marginTop="24dp"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/top_link_button" />
 
-                <com.example.openit.CustomButton
+                <com.example.openit.ui.CustomButton
                     android:id="@+id/button3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -242,4 +265,7 @@
 
 
     </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

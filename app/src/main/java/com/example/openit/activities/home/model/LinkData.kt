@@ -1,4 +1,5 @@
-package com.example.openit.home
+package com.example.openit.activities.home.model
+
 data class LinkData(
     val status: Boolean,
     val statusCode: Int,

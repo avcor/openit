@@ -1,24 +1,21 @@
-package com.example.openit.home
+package com.example.openit.activities.home.viewModel
 
-import android.annotation.TargetApi
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.openit.RetrofitClient
-import com.example.openit.TAG
-import com.example.openit.getXYaxis
+import com.example.openit.data.remote.instance.RetrofitClient
+import com.example.openit.utils.TAG
+import com.example.openit.utils.getXYaxis
+import com.example.openit.activities.home.model.LinkData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalDateTime
 
 class HomeViewModel: ViewModel() {
 
     private val dataApi = MutableLiveData<LinkData>();
-
+    private val isCallComplete = MutableLiveData<Boolean>(false)
     init{
        getApiValue()
     }
@@ -27,6 +24,9 @@ class HomeViewModel: ViewModel() {
         return dataApi
     }
 
+    fun getIsCallComplete() : LiveData<Boolean>{
+        return isCallComplete
+    }
     fun getApiValue(){
         val call: Call<LinkData> = RetrofitClient.apiService.getLinkData()
         call.enqueue(object : Callback<LinkData> {
@@ -36,13 +36,16 @@ class HomeViewModel: ViewModel() {
                     if (linkData != null) {
                         dataApi.postValue(getXYaxis(linkData))
                     }
+                    isCallComplete.postValue(true)
                 } else {
                     Log.d(TAG, "onResponse: not successfully" )
+                    isCallComplete.postValue(true)
                 }
             }
 
             override fun onFailure(call: Call<LinkData>, t: Throwable) {
                 Log.d(TAG, "onFailure: ")
+                isCallComplete.postValue(true)
             }
         })
     }

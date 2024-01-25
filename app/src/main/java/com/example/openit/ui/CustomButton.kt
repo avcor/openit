@@ -1,4 +1,4 @@
-package com.example.openit
+package com.example.openit.ui
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.openit.R
 
 class CustomButton  @JvmOverloads constructor(
     context: Context,

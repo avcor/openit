@@ -1,19 +1,23 @@
-package com.example.openit.home
+package com.example.openit.activities.home
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.openit.HomeLinkListRecycler
 import com.example.openit.R
 import com.example.openit.databinding.ActivityHomeBinding
-import com.example.openit.getGreetings
-import com.example.openit.getRangeDateNow_30D_back
-import com.example.openit.makeDateSetLineGraph
+import com.example.openit.activities.home.adapter.HomeLinkListRecycler
+import com.example.openit.utils.getGreetings
+import com.example.openit.utils.getRangeDateNow_30D_back
+import com.example.openit.activities.home.model.Link
+import com.example.openit.activities.home.model.LinkData
+import com.example.openit.activities.home.viewModel.HomeViewModel
+import com.example.openit.utils.makeDateSetLineGraph
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 
@@ -23,19 +27,25 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var rvAdapter: HomeLinkListRecycler
     private var topLinkList: List<Link> = ArrayList()
     private var recentLinkList: List<Link> = ArrayList()
+    private lateinit var apiViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_home)
         setContentView(binding.root)
 
-        ViewModelProvider(this).get(HomeViewModel::class.java).getLinkData().observe(this){
+        apiViewModel = ViewModelProvider(this).get(HomeViewModel::class.java);
+
+        apiViewModel.getLinkData().observe(this){
             topLinkList = it.data.top_links
             recentLinkList = it.data.recent_links
             binding.mydata = it
-
             setLineGraph(it)
             setLinkListRecycler(it.data.top_links)
+        }
+
+        apiViewModel.getIsCallComplete().observe(this){
+            if(it) binding.progressCircular.visibility = View.GONE
         }
 
         binding.apply{

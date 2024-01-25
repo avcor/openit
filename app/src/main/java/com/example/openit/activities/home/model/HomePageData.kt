@@ -1,4 +1,4 @@
-package com.example.openit.home
+package com.example.openit.activities.home.model
 
 import com.google.gson.annotations.SerializedName
 

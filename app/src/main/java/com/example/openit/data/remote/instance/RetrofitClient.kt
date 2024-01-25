@@ -1,6 +1,6 @@
-package com.example.openit
+package com.example.openit.data.remote.instance
 
-import com.example.openit.retrofitInterface.HomeApi
+import com.example.openit.data.remote.retrofitInterface.HomeApi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response

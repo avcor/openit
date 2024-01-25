@@ -1,23 +1,19 @@
-package com.example.openit
+package com.example.openit.utils
 
 import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import android.util.Log
 import androidx.core.content.ContextCompat
-import com.example.openit.home.LinkData
+import com.example.openit.R
+import com.example.openit.activities.home.model.LinkData
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 
 val TAG = "abcd";
 
@@ -45,7 +41,7 @@ fun getGreetings(): String {
     val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
 
     val greeting = when (hourOfDay) {
-        in 0..11 -> "Good morning"
+        in 4..11 -> "Good morning"
         in 12..16 -> "Good afternoon"
         else -> "Good evening"
     }

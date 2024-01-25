@@ -1,6 +1,6 @@
-package com.example.openit.retrofitInterface
+package com.example.openit.data.remote.retrofitInterface
 
-import com.example.openit.home.LinkData
+import com.example.openit.activities.home.model.LinkData
 import retrofit2.Call
 import retrofit2.http.GET
 

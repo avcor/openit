@@ -1,13 +1,12 @@
-package com.example.openit
+package com.example.openit.activities.home.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openit.databinding.CardDetailsBinding
-import com.example.openit.home.Link
+import com.example.openit.activities.home.model.Link
+import com.example.openit.extensions.militaryToDD_MMM_YYY
+import com.example.openit.extensions.truncate
 
 class HomeLinkListRecycler(private var dataSet: List<Link>): RecyclerView.Adapter<HomeLinkListRecycler.ViewHolder>() {
 
