@@ -1,4 +1,4 @@
-package com.example.openit.data.remote.instance
+package com.example.openit.data.remote.client
 
 import com.example.openit.data.remote.retrofitInterface.HomeApi
 import okhttp3.Interceptor

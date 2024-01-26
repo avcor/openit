@@ -3,12 +3,14 @@ package com.example.openit.activities.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.openit.R
 import com.example.openit.databinding.CardDetailsBinding
 import com.example.openit.activities.home.model.Link
 import com.example.openit.extensions.militaryToDD_MMM_YYY
 import com.example.openit.extensions.truncate
 
-class HomeLinkListRecycler(private var dataSet: List<Link>): RecyclerView.Adapter<HomeLinkListRecycler.ViewHolder>() {
+class HomeLinkListRecycler(private var dataSet: List<Link>, ): RecyclerView.Adapter<HomeLinkListRecycler.ViewHolder>() {
 
     inner class ViewHolder(val binding: CardDetailsBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -26,6 +28,10 @@ class HomeLinkListRecycler(private var dataSet: List<Link>): RecyclerView.Adapte
                 binding.linkValueText.text = web_link.truncate(30)
                 binding.linkNameText.text = title.truncate(20)
                 binding.dateText.text = created_at.militaryToDD_MMM_YYY()
+                Glide.with(binding.logoImageView.context)
+                    .load(original_image)
+                    .placeholder(R.drawable.amazon_icon)
+                    .into(binding.logoImageView)
             }
         }
     }

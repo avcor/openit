@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.openit.data.remote.instance.RetrofitClient
+import com.example.openit.data.remote.client.RetrofitClient
 import com.example.openit.utils.TAG
 import com.example.openit.utils.getXYaxis
 import com.example.openit.activities.home.model.LinkData
