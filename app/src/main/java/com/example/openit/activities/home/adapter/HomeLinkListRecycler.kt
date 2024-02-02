@@ -9,9 +9,13 @@ import com.example.openit.databinding.CardDetailsBinding
 import com.example.openit.activities.home.model.Link
 import com.example.openit.extensions.militaryToDD_MMM_YYY
 import com.example.openit.extensions.truncate
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class HomeLinkListRecycler(private var dataSet: List<Link>, ): RecyclerView.Adapter<HomeLinkListRecycler.ViewHolder>() {
+class HomeLinkListRecycler @Inject constructor(): RecyclerView.Adapter<HomeLinkListRecycler.ViewHolder>() {
 
+    private var dataSet: List<Link> = listOf()
     inner class ViewHolder(val binding: CardDetailsBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,5 +42,6 @@ class HomeLinkListRecycler(private var dataSet: List<Link>, ): RecyclerView.Adap
 
     fun updateDataSet(newDataSet: List<Link>){
         dataSet = newDataSet
+        notifyDataSetChanged()
     }
 }

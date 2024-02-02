@@ -1,7 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id ("kotlin-kapt")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+
 }
 
 android {
@@ -12,7 +14,6 @@ android {
         viewBinding = true
         dataBinding = true
     }
-
 
     defaultConfig {
         applicationId = "com.example.openit"
@@ -59,4 +60,15 @@ dependencies {
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+}
+
+kapt {
+    correctErrorTypes = true
 }

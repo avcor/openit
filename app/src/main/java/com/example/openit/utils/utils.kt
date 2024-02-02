@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import androidx.core.content.ContextCompat
 import com.example.openit.R
+import com.example.openit.activities.home.model.GraphData
 import com.example.openit.activities.home.model.LinkData
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -51,7 +52,7 @@ fun getGreetings(): String {
 
 
 @TargetApi(Build.VERSION_CODES.O)
-fun getXYaxis(linkData: LinkData): LinkData {
+fun mapGraphData(linkData: LinkData): GraphData {
     val current = LocalDateTime.now()
     val xAxis = ArrayList<String>()
     val yAxis = ArrayList<Int>();
@@ -66,11 +67,7 @@ fun getXYaxis(linkData: LinkData): LinkData {
         xTick.add(r.toLocalDate().dayOfMonth.toString() + '/' + r.toLocalDate().monthValue.toString());
     }
 
-    linkData.xAxis = xAxis;
-    linkData.yAxis = yAxis;
-    linkData.xTick = xTick;
-
-    return linkData
+    return GraphData(xAxis, yAxis, xTick)
 }
 
 @TargetApi(Build.VERSION_CODES.O)

@@ -3,6 +3,7 @@ package com.example.openit.activities.home
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -12,19 +13,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.openit.R
 import com.example.openit.databinding.ActivityHomeBinding
 import com.example.openit.activities.home.adapter.HomeLinkListRecycler
+import com.example.openit.activities.home.model.GraphData
 import com.example.openit.utils.getGreetings
 import com.example.openit.utils.getRangeDateNow_30D_back
 import com.example.openit.activities.home.model.Link
-import com.example.openit.activities.home.model.LinkData
 import com.example.openit.activities.home.viewModel.HomeViewModel
+import com.example.openit.data.remote.type.ApiResponseType
 import com.example.openit.utils.makeDateSetLineGraph
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
+    @Inject
+    internal lateinit var rvAdapter: HomeLinkListRecycler
+
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var rvAdapter: HomeLinkListRecycler
     private var topLinkList: List<Link> = ArrayList()
     private var recentLinkList: List<Link> = ArrayList()
     private lateinit var apiViewModel: HomeViewModel
@@ -34,33 +41,33 @@ class HomeActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_home)
         setContentView(binding.root)
 
-        apiViewModel = ViewModelProvider(this).get(HomeViewModel::class.java);
-
-        apiViewModel.getLinkData().observe(this){
-            topLinkList = it.data.top_links
-            recentLinkList = it.data.recent_links
-            binding.mydata = it
-            setLineGraph(it)
-            setLinkListRecycler(it.data.top_links)
-        }
-
-        apiViewModel.getIsCallComplete().observe(this){
-            if(it) binding.progressCircular.visibility = View.GONE
+        apiViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        apiViewModel.getResponse().observe(this){
+            when(it){
+                is ApiResponseType.Failure -> { Toast.makeText(this, "Unable to get data", Toast.LENGTH_SHORT).show() }
+                is ApiResponseType.NoData -> { Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show()}
+                is ApiResponseType.Success -> {
+                    val linkData = it.responseData
+                    topLinkList =  linkData.data.top_links
+                    recentLinkList = linkData.data.recent_links
+                    binding.mydata = linkData
+                    setLineGraph(it.graphData)
+                    setLinkListRecycler(linkData.data.top_links)
+                }
+            }
+            binding.progressCircular.visibility = View.GONE
         }
 
         binding.apply{
-            topLinkButton.setOnClickListener {
-                handleClickTopLink()
-            }
-            recentLinkButton.setOnClickListener {
-                handleClickRecentLink()
-            }
+            topLinkButton.setOnClickListener { handleClickTopLink() }
+            recentLinkButton.setOnClickListener { handleClickRecentLink() }
             greetingTextView.text = getGreetings()
             graphTimeRange.text = getRangeDateNow_30D_back()
         }
+
     }
 
-    fun setLineGraph(it: LinkData) {
+    fun setLineGraph(it: GraphData) {
         binding.aaChartViewMain.apply {
             data = makeDateSetLineGraph(it.yAxis, this@HomeActivity)
             legend.isEnabled = false
@@ -91,13 +98,12 @@ class HomeActivity : AppCompatActivity() {
     private fun setLinkListRecycler(topLinks: List<Link>) {
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         binding.listItem.setLayoutManager(layoutManager)
-        rvAdapter = HomeLinkListRecycler(topLinks)
+        rvAdapter.updateDataSet(topLinks)
         binding.listItem.adapter = rvAdapter
     }
 
     private fun handleClickTopLink(){
         rvAdapter.updateDataSet(topLinkList)
-        rvAdapter.notifyDataSetChanged()
 
         binding.apply {
             topLinkButton.apply {
@@ -113,7 +119,6 @@ class HomeActivity : AppCompatActivity() {
 
     private fun handleClickRecentLink(){
         rvAdapter.updateDataSet(recentLinkList)
-        rvAdapter.notifyDataSetChanged()
 
         binding.apply {
             recentLinkButton.apply {

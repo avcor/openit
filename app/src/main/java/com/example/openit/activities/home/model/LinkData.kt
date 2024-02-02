@@ -1,5 +1,9 @@
 package com.example.openit.activities.home.model
 
+import android.annotation.TargetApi
+import android.os.Build
+
+@TargetApi(Build.VERSION_CODES.O)
 data class LinkData(
     val status: Boolean,
     val statusCode: Int,
@@ -15,7 +19,4 @@ data class LinkData(
     val links_created_today: Int,
     val applied_campaign: Int,
     val data: LinkDetails,
-    var xAxis: ArrayList<String>,
-    var yAxis: ArrayList<Int>,
-    var xTick: ArrayList<String>,
 )
