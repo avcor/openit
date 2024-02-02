@@ -45,7 +45,7 @@ class HomeActivity : AppCompatActivity() {
         apiViewModel.getResponse().observe(this){
             when(it){
                 is ApiResponseType.Failure -> { Toast.makeText(this, "Unable to get data", Toast.LENGTH_SHORT).show() }
-                is ApiResponseType.NoData -> { Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show()}
+                is ApiResponseType.NoData -> { Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show() }
                 is ApiResponseType.Success -> {
                     val linkData = it.responseData
                     topLinkList =  linkData.data.top_links
@@ -54,6 +54,7 @@ class HomeActivity : AppCompatActivity() {
                     setLineGraph(it.graphData)
                     setLinkListRecycler(linkData.data.top_links)
                 }
+
             }
             binding.progressCircular.visibility = View.GONE
         }
